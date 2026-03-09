@@ -1,0 +1,41 @@
+<mat-card class="auditor-card" *ngIf="auditorInfo$ | async as aud" appearance="outlined">
+    <mat-card-header>
+        <!-- avatar (mat-card-avatar works on img too) -->
+        <img mat-card-avatar [src]="`http://localhost:5250/uploads/${aud.image}`" alt="{{ aud.name }} avatar"
+            class="avatar-img" />
+
+        <!-- title + subtitle -->
+        <mat-card-title>{{ aud.auditNode?.data?.name }}</mat-card-title>
+        <mat-card-subtitle>{{ aud.type }}</mat-card-subtitle>
+    </mat-card-header>
+
+    <!-- large image area (optional duplicate of avatar if you want a bigger photo) -->
+    <img *ngIf="auditor.image" mat-card-image [src]="`http://localhost:5250/uploads/${aud.image}`"
+        alt="Photo of {{ aud.auditNode?.data?.name }}" style="height: 500px; object-fit: fill;" />
+
+    <mat-card-content>
+        <div class="meta">
+            <p><strong>Employee ID:</strong> {{ aud.empId }}</p>
+            <p><strong>Department:</strong> {{ aud.dept }}</p>
+            <p *ngIf="aud.contact">
+                <strong>Email:</strong>
+                <a [href]="'mailto:' + aud.contact">{{ aud.contact }}</a>
+            </p>
+        </div>
+
+        <div class="description">
+            <h4>Profile Summary</h4>
+            <p>{{ aud.description }}</p>
+        </div>
+
+        <mat-card-actions align="end">
+            <button mat-stroked-button (click)="onSendRequest(aud?.contact)"
+                aria-label="Send request to {{ auditor.name }}">
+                <mat-icon aria-hidden="false" aria-label="mail icon">mail</mat-icon>
+                &nbsp;Send Request
+            </button>
+        </mat-card-actions>
+
+    </mat-card-content>
+
+</mat-card>

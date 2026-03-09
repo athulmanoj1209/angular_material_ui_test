@@ -1,0 +1,46 @@
+.auditor-card {
+  max-width: 900px;
+  margin: 32px auto;
+  border-radius: 10px;
+  margin-top: 140px;
+}
+
+/* avatar small circle */
+.avatar-img {
+  object-fit: cover;
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+}
+
+/* large image inside card */
+mat-card img[mat-card-image] {
+  max-height: 300px;
+  object-fit: cover;
+}
+
+/* meta + description spacing */
+mat-card-content .meta p {
+  margin: 6px 0;
+  font-size: 15px;
+}
+
+mat-card-content .description {
+  margin-top: 12px;
+}
+
+mat-card-actions {
+  padding: 16px;
+}
+
+/* align action to right */
+mat-card-actions[align="end"] {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* small icon spacing */
+mat-icon {
+  vertical-align: middle;
+  font-size: 18px;
+}

@@ -1,4 +1,4 @@
-<mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor" style="display: flex; flex-direction: column; gap: 10px;">
+<mat-tree #tree [dataSource]="dataSource$ | async" [childrenAccessor]="childrenAccessor" style="display: flex; flex-direction: column; gap: 10px;">
   <!-- Leaf node template -->
   <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
     <!-- padding button -->
@@ -22,22 +22,20 @@
     </mat-card> -->
     <!-- optionally show size/type -->
 
-    <mat-card class="example-card" appearance="outlined" style="display: flex; justify-content: center; align-items: center; width: 50%;">
+    <mat-card class="example-card" appearance="outlined" style="display: flex; justify-content: center; align-items: center; width: 30%;">
       <mat-card-header>
         <div mat-card-avatar class="example-header-image"></div>
         <mat-card-title>{{ node?.data?.name }}</mat-card-title>
         <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
       </mat-card-header>
-      <img mat-card-image [src]="node?.data?.image" alt="Photo of a Shiba Inu" style="height: 200px; width: 200px;" />
-      <mat-card-content style="display: flex; justify-content: center; align-items: center;">
+      <img mat-card-image [src]="`http://localhost:5250/uploads/${node?.data?.image}`" alt="Photo of a Shiba Inu" style="height: 200px; width: 250px; margin-top: -23px; object-fit: cover; border-radius: 25px;" />
+      <!-- <mat-card-content style="display: flex; justify-content: center; align-items: center;">
         <p style="text-align: center; width: 70%;">
-          The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-          A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-          bred for hunting.
+          {{ node?.data?.description }}
         </p>
-      </mat-card-content>
+      </mat-card-content> -->
       <mat-card-actions>
-        <button matButton (click)="viewDetails()">View Details</button>
+        <button matButton (click)="viewDetails(node?.data)">View Details</button>
       </mat-card-actions>
     </mat-card>
 
@@ -53,7 +51,7 @@
       </mat-icon>
     </button>
     {{ node.data?.name }}
-    <small class="meta"> ({{ node.data?.type }} • {{ node.data?.size }})</small>
+    <small class="meta"> ({{ node.data?.size }} • {{ node.data?.type }})</small>
     <!-- <button (click)="getImageDetails(node?.data?.image)" style="padding: 10px; background-color: blue;">iamge details</button> -->
   </mat-tree-node>
 </mat-tree>
