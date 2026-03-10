@@ -1,4 +1,4 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnDestroy, OnInit } from '@angular/core';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -8,6 +8,9 @@ import { ImageService } from '../image.service';
 import { catchError, map, Observable } from 'rxjs';
 import { AsyncPipe, NgIf } from '@angular/common';
 import { createGlobalPositionStrategy } from '@angular/cdk/overlay';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { DialogModule } from '@angular/cdk/dialog';
+import { FormDialog } from '../form-dialog/form-dialog';
 
 @Component({
   selector: 'app-auditorprofile',
@@ -15,9 +18,10 @@ import { createGlobalPositionStrategy } from '@angular/cdk/overlay';
     MatCardModule,
     MatButtonModule,
     MatIconModule,
+    DialogModule,
     NgIf,
-    AsyncPipe
-],
+    AsyncPipe,
+  ],
   templateUrl: './auditorprofile.html',
   styleUrl: './auditorprofile.css',
 })
@@ -25,22 +29,33 @@ export class Auditorprofile implements OnInit {
 
   private activatedRoute = inject(ActivatedRoute);
   private imageService = inject(ImageService);
+  private cdr = inject(ChangeDetectorRef);
+
+  private readonly dialog = inject(MatDialog);
+
   auditorInfo$!: Observable<any>;
+  auditorData: any;
 
   private employeeId = this.activatedRoute.snapshot.paramMap.get('id');
 
   async ngOnInit() {
 
-    this.auditorInfo$ = this.imageService.getAuthorById(this.employeeId!)
+    console.log(this.employeeId);
+    await this.imageService.getAuthorById(this.employeeId!)
       .pipe(
         (map((response: any) => { return response?.data })),
         catchError((error: Error) => {
           console.log("error in admin register", error.message);
           throw error;
         })
+      )
+      .subscribe(auditorData => {
+        this.auditorData = auditorData;
+        this.cdr.detectChanges();
+      }
       );
-      
-    console.log(this.auditorInfo$);
+
+    console.log(this.auditorData);
   }
 
 
@@ -58,6 +73,15 @@ export class Auditorprofile implements OnInit {
   onSendRequest(email: string) {
     console.log(email);
     window.location.href = `mailto:${email}`;
-   }
+  }
+
+  openRequest(auditor: any) {
+    const dialogRef = this.dialog.open(FormDialog, {
+      data: auditor,
+      width: '800px',
+      height: '300px'
+    },
+    );
+  }
 
 }

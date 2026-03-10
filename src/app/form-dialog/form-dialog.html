@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Request Services</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field style="width: 100%;">
+  <mat-label>Select Services</mat-label>
+  <mat-select [formControl]="toppings" multiple>
+    @for (topping of data.services; track topping) {
+      <mat-option [value]="topping">{{topping.serviceName}}</mat-option>
+    }
+  </mat-select>
+</mat-form-field>
+
+<div style="margin-top: 20px; width: 100%; display: flex; justify-content: center; align-items: center;">
+  <label for="fileInput">Upload File</label>
+  <input type="file" name="" id="fileInput" style="display: none;">
+</div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button matButton mat-dialog-close>Cancel</button>
+  <button matButton [mat-dialog-close]="true" cdkFocusInitial>Install</button>
+</mat-dialog-actions>

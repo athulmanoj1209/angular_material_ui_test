@@ -1,4 +1,4 @@
-<mat-card class="auditor-card" *ngIf="auditorInfo$ | async as aud" appearance="outlined">
+<mat-card class="auditor-card" *ngIf="auditorData as aud" appearance="outlined">
     <mat-card-header>
         <!-- avatar (mat-card-avatar works on img too) -->
         <img mat-card-avatar [src]="`http://localhost:5250/uploads/${aud.image}`" alt="{{ aud.name }} avatar"
@@ -28,13 +28,21 @@
             <p>{{ aud.description }}</p>
         </div>
 
-        <mat-card-actions align="end">
-            <button mat-stroked-button (click)="onSendRequest(aud?.contact)"
-                aria-label="Send request to {{ auditor.name }}">
-                <mat-icon aria-hidden="false" aria-label="mail icon">mail</mat-icon>
-                &nbsp;Send Request
-            </button>
-        </mat-card-actions>
+        <div style="display: flex; " align="end">
+            <mat-card-actions align="start">
+                <button mat-stroked-button (click)="openRequest(aud)" aria-label="open dialog">
+                    &nbsp;Submit Request
+                </button>
+            </mat-card-actions>
+
+            <mat-card-actions align="end">
+                <button mat-stroked-button (click)="onSendRequest(aud?.contact)"
+                    aria-label="Send request to {{ auditor.name }}">
+                    <mat-icon aria-hidden="false" aria-label="mail icon">mail</mat-icon>
+                    &nbsp;Send Request
+                </button>
+            </mat-card-actions>
+        </div>
 
     </mat-card-content>
 
