@@ -43,7 +43,7 @@ export class Expensivecomponents implements OnInit {
     // this.imageService.getImages().then((images: any) => this.imageService.set(images));
     //     this.imageService.getFilesystem().then((files) => (this.files = files));
     // (this.products as any) = await this.imageService.getProductsMini();
-    this.dataSource$ = this.imageService.getTreeData()
+    this.dataSource$ = this.imageService.getTreeData(1)
       .pipe(
         //map does - It doesn't "assign" anything to dataSource$. Instead, it says: "Whenever data flows through this stream, transform it into response.data before it reaches the end."
         (map((response: any) => response.data)),

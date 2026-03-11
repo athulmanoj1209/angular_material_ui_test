@@ -12,5 +12,5 @@ export const routes: Routes = [
     {
         path: 'auditor-details/:id',
         loadComponent: () => import('./auditorprofile/auditorprofile').then(com => com.Auditorprofile)
-    }
+    },
 ];
